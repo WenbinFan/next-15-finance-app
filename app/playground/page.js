@@ -1,3 +1,5 @@
+import PageHeader from "@/components/page-header";
+
 export default function Page() {
   return (
     <main className="space-y-8">
@@ -6,7 +8,7 @@ export default function Page() {
         <div>
             <h2 className="mb-4 text-lg font-mono">ComponentName</h2>
             <hr className="b-4 border-gray-200 dark:border-gray-800"/>
-            <div>Here goes the actual component</div>
+            <div><PageHeader /></div>
         </div>
     </main>
   )
