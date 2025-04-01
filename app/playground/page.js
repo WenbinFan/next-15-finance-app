@@ -14,7 +14,7 @@ export default function Page() {
 
         <div>
             <h2 className="mb-4 text-lg font-mono">PageHeader</h2>
-            <hr className="b-4 border-gray-200 dark:border-gray-800"/>
+            <hr className="mb-4 border-gray-200 dark:border-gray-800"/>
             <div><PageHeader /></div>
         </div>
 
