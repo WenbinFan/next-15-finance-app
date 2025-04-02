@@ -35,10 +35,10 @@ export default function TransactionForm() {
             <Label className="mb-1">Description</Label>
             <Input type="number" />
         </div>
+    </div>
 
-        <div className="flex justify-end">
-            <Button type="submit">Save</Button>
-        </div>
+    <div className="flex justify-end">
+        <Button type="submit">Save</Button>
     </div>
   </form>
 }
