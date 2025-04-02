@@ -23,7 +23,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={theme}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} min-h-screen flex flex-col px-8`}
       >
         <Providers>
           {children}
