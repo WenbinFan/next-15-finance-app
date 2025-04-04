@@ -7,6 +7,7 @@ import { categories,types } from "@/lib/consts"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { transactionSchema } from "@/lib/validation"
+import { useState } from "react";
 
 export default function TransactionForm() {
     const {
@@ -19,9 +20,24 @@ export default function TransactionForm() {
         resolver: zodResolver(transactionSchema)
       })
 
-      const onSubmit = (data) => {
-        console.log(data)
-        console.log(process.env.NEXT_PUBLIC_API_URL)
+      const [isSaving, setSaving] = useState(false)
+
+      const onSubmit = async (data) => {
+        setSaving(true)
+        try {
+            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    ...data,
+                    created_at: `${data.created_at}T00:00:00`,
+                })
+            })
+        } finally {
+            setSaving(false)
+        }
     }
   return <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -53,13 +69,13 @@ export default function TransactionForm() {
 
         <div className="col-span-1 md:col-span-2">
             <Label className="mb-1">Description</Label>
-            <Input type="number" {...register("description")} />
+            <Input {...register("description")} />
             {errors.description && <p className="mt-1 text-red-500">{errors.description.message}</p>}
         </div>
     </div>
 
     <div className="flex justify-end">
-        <Button type="submit">Save</Button>
+        <Button type="submit" disabled={isSaving}>Save</Button>
     </div>
   </form>
 }
