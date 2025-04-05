@@ -10,7 +10,8 @@ import { ErrorBoundary } from "react-error-boundary";
 import { types } from "@/lib/consts";
 import Range from "./components/range";
 
-export default function Page() {
+export default async function Page({ searchParams }) {
+  const range = (await searchParams)?.range ?? 'last30days';
   return (<>
   <section className="mb-8 flex justify-between items-center">
     <h1 className="text-4xl font-semibold">Summary</h1>
@@ -22,7 +23,7 @@ export default function Page() {
       {types.map(type => (
         <ErrorBoundary key={type} fallback={<div className="text-red-500">Cannot fetch {type} trend data</div>}>
           <Suspense fallback={<TrendFallback />}>
-            <Trend type={type} />
+            <Trend type={type} range={range} />
           </Suspense>
         </ErrorBoundary>
       ))}
@@ -36,7 +37,7 @@ export default function Page() {
       </Link>
     </section>
     <Suspense fallback={<TransactionListFallback />}>
-      <TransactionList />
+      <TransactionList range={range} />
     </Suspense>
   </>)
 }
