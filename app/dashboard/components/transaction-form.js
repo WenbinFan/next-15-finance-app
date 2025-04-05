@@ -9,8 +9,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { transactionSchema } from "@/lib/validation"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { purgeTractionListCache } from "@/lib/actions";
 import FormError from "@/components/form-error";
+import { createTransaction } from "@/lib/actions"
 
 export default function TransactionForm() {
     const {
@@ -29,17 +29,7 @@ export default function TransactionForm() {
       const onSubmit = async (data) => {
         setSaving(true)
         try {
-            await fetch(`${process.env.NEXT_PUBLIC_API_URL}/transactions`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    ...data,
-                    created_at: `${data.created_at}T00:00:00`,
-                })
-            })
-            await purgeTractionListCache()
+            await createTransaction(data)
             router.push("/dashboard")
         } finally {
             setSaving(false)
@@ -57,8 +47,9 @@ export default function TransactionForm() {
         <div>
             <Label className="mb-1">Category</Label>
             <Select {...register("category")}>
-            <FormError error={errors.category} />
+                {categories.map(category => <option key={category}>{category}</option>)}
             </Select>
+            <FormError error={errors.category} />
         </div>
 
         <div>

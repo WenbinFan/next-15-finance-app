@@ -8,7 +8,6 @@ import { PlusCircle } from "lucide-react";
 import { sizes, variants } from "@/lib/variants";
 
 export default function Page() {
-
   return (<>
   <section className="mb-8">
     <h1 className="text-4xl font-semibold">Summary</h1>
