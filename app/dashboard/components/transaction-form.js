@@ -11,7 +11,7 @@ import { transactionSchema } from "@/lib/validation"
 import { use, useState } from "react";
 import { useRouter } from "next/navigation";
 import FormError from "@/components/form-error";
-import { createTransaction } from "@/lib/actions"
+import { createTransaction, updateTransaction } from "@/lib/actions"
 
 export default function TransactionForm({initialData}) {
     const {
@@ -39,7 +39,7 @@ export default function TransactionForm({initialData}) {
         setLastError()
         try {
             if (editing) {
-
+                await updateTransaction(initialData.id, data)
             } else {
                 await createTransaction(data)
             }
