@@ -1,5 +1,6 @@
+import TransactionForm from "@/app/dashboard/components/transaction-form"
 import { createClient } from "@/lib/supabase/server"
-
+import { notFound } from "next/navigation"
 
 export default async function Page({params: {id}}) {
     const supabase = await createClient()
@@ -8,7 +9,11 @@ export default async function Page({params: {id}}) {
         .select('*')
         .eq('id', id)
         .single()
+
+    if (error)  notFound()
     
-    console.log(transaction)
-  return (<>Hello!</>)
+  return <>
+      <h1 className="text-4xl font-semibold mb-8">Add Transaction</h1>
+      <TransactionForm initialData={transaction} />
+    </>
 }
