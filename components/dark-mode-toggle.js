@@ -14,14 +14,14 @@ export default function DarkModeToggle({defaultMode = 'dark'}) {
 
   if (!mounted) {
     return <Button variant="ghost" size="sm" disabled>
-      <div className="w-4 h-4" />
+      <div className="w-6 h-6" />
     </Button>
   }
 
   return (
     <Button variant="ghost" size="sm" onClick={toggleTheme}>
-      {theme === 'dark' && <Sun className="w-4 h-4" />}
-      {theme === 'light' && <Moon className="w-4 h-4" />}
+      {theme === 'dark' && <Sun className="w-6 h-6" />}
+      {theme === 'light' && <Moon className="w-6 h-6" />}
     </Button>
   )
 }

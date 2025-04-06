@@ -9,17 +9,30 @@ const useDarkMode = (defaultTheme = 'dark') => {
 
   // Initialize theme from cookie or default
   useEffect(() => {
-    const savedTheme = cookies.theme || defaultTheme
+    if (typeof window === 'undefined') return;
+
+    const savedTheme = typeof cookies.theme === 'string' 
+      ? cookies.theme 
+      : (typeof defaultTheme === 'string' ? defaultTheme : 'dark');
+    
     setTheme(savedTheme)
-    document.documentElement.classList.remove('light', 'dark')
-    document.documentElement.classList.add(savedTheme)
+    
+    // Safe DOM manipulation
+    if (document && document.documentElement) {
+      document.documentElement.classList.remove('light', 'dark')
+      document.documentElement.classList.add(savedTheme)
+    }
   }, [cookies.theme, defaultTheme])
 
   const toggleTheme = () => {
+    if (typeof window === 'undefined') return;
+    
     const newTheme = theme === 'dark' ? 'light' : 'dark'
     setTheme(newTheme)
+    
     document.documentElement.classList.remove('light', 'dark')
     document.documentElement.classList.add(newTheme)
+    
     setCookie('theme', newTheme, { 
       path: '/',
       sameSite: 'lax',
