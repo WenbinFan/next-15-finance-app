@@ -11,6 +11,7 @@ import { useActionState } from "react";
 const initialState = {
   message: "",
   error: false,
+  errors: {}
 };
 
 export default function SettingsForm({ defaults }) {
