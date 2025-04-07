@@ -3,6 +3,7 @@ import "./globals.css";
 import getServerTheme from "@/hooks/use-server-dark-mode";
 import Providers from "@/components/providers";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,8 @@ export default async function RootLayout({ children }) {
       >
         <Providers>
           {children}
+          <Analytics />
+          <SpeedInsights />
         </Providers>
       </body>
     </html>
