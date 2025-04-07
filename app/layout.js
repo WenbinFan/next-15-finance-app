@@ -1,6 +1,6 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import useServerDarkMode from "@/hooks/use-server-dark-mode";
+import getServerTheme from "@/hooks/use-server-dark-mode";
 import Providers from "@/components/providers";
 
 const geistSans = Geist({
@@ -22,7 +22,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const theme = await useServerDarkMode()
+  const theme = await getServerTheme()
   return (
     <html lang="en" className={theme}>
       <body
