@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { createClient } from '@supabase/supabase-js';
-import { faker } from '@faker-js/faker';
+import { faker, th } from '@faker-js/faker';
 
 dotenv.config({ path: '.env.local' });
 
@@ -13,12 +13,41 @@ export const categories = [
   'Housing', 'Transport', 'Health', 'Food', 'Education', 'Other'
 ]
 
+async function seedUsers() {
+    for (let i = 0; i < 5; i++) {
+        try {
+            const { data, error } = await supabase.auth.admin.createUser({
+                email: faker.internet.email(),
+                password: 'password',
+              })
+            if (error) {
+                throw new Error(error)
+            }
+
+            console.log(`Created user: ${data.user.email}`)
+        } catch (e) {
+            console.error('Error seeding users:', e)
+        }
+    }
+}
+
 async function seed() {
+    await seedUsers()
     let transactions = []
 
-    for (let i = 0; i < 10; i++) {
+    const { data: { users }, error: listUsersError } = await supabase.auth.admin.listUsers()
+
+    if (listUsersError) {
+        console.error('Error listing users:', listUsersError)
+        return
+    }
+
+    const userIds = users.map(user => user.id)
+
+    for (let i = 0; i < 100; i++) {
         const created_at = faker.date.past()
         let type, category = null
+        const user_id = faker.helpers.arrayElement(userIds)
 
         const typeBias = Math.random()
 
@@ -66,6 +95,7 @@ async function seed() {
             type,
             description: faker.lorem.sentence(),
             category,
+            user_id
         })
     }
 
@@ -76,7 +106,7 @@ async function seed() {
     if (error) {
         console.error('Error seeding database:', error)
     } else {
-        console.log('Database seeded successfully')
+        console.log(`Seeded ${transactions.length} transactions`)
     }
 }
 
