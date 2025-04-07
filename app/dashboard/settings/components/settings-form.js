@@ -6,7 +6,7 @@ import Input from "@/components/input";
 import Label from "@/components/label";
 import SubmitButton from "@/components/submit-button";
 import { updateSettings } from "@/lib/actions";
-import { useFormState } from "react-dom";
+import { useActionState } from "react";
 
 const initialState = {
   message: "",
@@ -14,7 +14,7 @@ const initialState = {
 };
 
 export default function SettingsForm({ defaults }) {
-  const [state, formAction] = useFormState(
+  const [state, formAction] = useActionState(
     updateSettings,
     initialState,
   );

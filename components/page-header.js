@@ -19,7 +19,7 @@ export default async function PageHeader({className}) {
             <DarkModeToggle defaultMode={theme} />
             {user && <Link className={`flex items-center space-x-1 ${variants['ghost']} ${sizes['sm']}`} href="/dashboard/settings">
               <Avatar />
-              <span>{user?.email}</span>
+              <span>{user?.user_metadata.fullName}</span>
             </Link>}
             {user && <SignOutButton />}
             {!user && <Link href="/login" className={`${variants['ghost']} ${sizes['sm']}`}>
