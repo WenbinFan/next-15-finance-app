@@ -50,7 +50,7 @@ export default function TransactionList({ range, initialTransactions }) {
             {transactions.length === 0 && <div className="text-center text-gray-400 dark:text-gray-500">No transactions found</div>}
             {!buttonHidden && <div className="flex justify-center">
                 <Button variant="ghost" onClick={handleClick}>
-                    <div className="flex items-center space-x-1">
+                    <div className="flex items-center space-x-1 px-4 py-2">
                         {loading && <Loader className="animate-spin" />}
                         <div>Load More</div>
                     </div>
